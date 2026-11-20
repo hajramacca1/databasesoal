@@ -344,7 +344,7 @@
         // =========================================================================
         // 1. KONFIGURASI UTAMA (TEMPEL URL WEB APP GOOGLE SCRIPT ANDA DI SINI)
         // =========================================================================
-        const DEFAULT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwOVhNBZRAK0NiBQmgmdAkNaVABnqFLZUyD_H5vz0_Z/dev"; // <--- PASTE URL https://script.google.com/macros/s/.../exec DI SINI
+        const DEFAULT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxv-hIMPz0mOPGQy3fzD2l_bnaZE2iMODeClhixM-Yg2yKEf631vZIvAhxOaFASYt5kRQ/exec"; // <--- PASTE URL https://script.google.com/macros/s/.../exec DI SINI
         const ADMIN_PASSWORD = "hajra03";
 
         let appConfig = {
