@@ -47,7 +47,7 @@
     </header>
 
     <!-- ===================================================================== -->
-    <!-- 1. HALAMAN LOGIN PESERTA (VALIDASI DATABASE SHEET: NAMA, KELAS, TOKEN)-->
+    <!-- 1. HALAMAN LOGIN PESERTA (PILIHAN KELAS OTOMATIS DARI DATABASE SHEET) -->
     <!-- ===================================================================== -->
     <main id="screen-login" class="flex-1 flex items-center justify-center p-4">
         <div class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-blue-100 overflow-hidden">
@@ -64,30 +64,35 @@
                 <div id="login-error" class="hidden bg-red-50 border-l-4 border-red-600 text-red-700 p-3 rounded-lg text-xs font-semibold leading-relaxed"></div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Kelas</label>
+                    <div class="flex items-center justify-between mb-1.5">
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Kelas</label>
+                        <button type="button" onclick="syncFromGoogleSheet(true)" id="btn-refresh-kelas"
+                            title="Segarkan daftar kelas & murid terbaru dari Google Sheet"
+                            class="text-[11px] font-bold text-blue-700 hover:text-blue-900 flex items-center gap-1 transition">
+                            <span>&#8635; Segarkan Kelas</span>
+                        </button>
+                    </div>
                     <select id="input-kelas" required onchange="onLoginKelasChange()"
                         class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold text-slate-700 focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition">
-                        <option value="" disabled selected>-- Pilih Kelas Anda --</option>
-                        <option value="9.1">Kelas 9.1</option>
-                        <option value="9.2">Kelas 9.2</option>
+                        <option value="" disabled selected>-- Memuat Daftar Kelas... --</option>
                     </select>
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nama Lengkap Murid</label>
                     <input type="text" id="input-nama" list="datalist-murid" required autocomplete="off"
-                        placeholder="Contoh: Ahmad Fauzan"
+                        placeholder="Pilih kelas lalu ketik/pilih nama..."
                         class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition">
                     <datalist id="datalist-murid"></datalist>
                     <p id="login-db-hint" class="text-[11px] text-blue-700 font-medium mt-1">
-                        *Pilih atau ketik Nama Lengkap sesuai Database Murid.
+                        *Pilih kelas terlebih dahulu untuk menampilkan daftar murid.
                     </p>
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Token Soal</label>
                     <input type="text" id="input-token" required autocomplete="off"
-                        placeholder="Contoh: Ujian2026"
+                        placeholder="Contoh: Matematika9"
                         class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-mono font-bold focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition">
                     <p class="text-[11px] text-slate-400 mt-1">*Minta token aktif kepada guru/pengawas ruang ujian.</p>
                 </div>
@@ -246,7 +251,7 @@
                 2. Analisis Soal & Jawaban Per Nomor
             </button>
             <button onclick="switchAdminTab('tab-murid')" id="btn-tab-murid" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
-                3. Database Login Murid
+                3. Database Login Murid & Kelas
             </button>
             <button onclick="switchAdminTab('tab-pengaturan')" id="btn-tab-pengaturan" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
                 4. Pengaturan Profil Sekolah, Ujian & Alarm
@@ -262,8 +267,6 @@
                 </div>
                 <select id="filter-kelas-admin" onchange="renderAdminHasilTable()" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold">
                     <option value="ALL">Semua Kelas</option>
-                    <option value="9.1">Kelas 9.1 Saja</option>
-                    <option value="9.2">Kelas 9.2 Saja</option>
                 </select>
             </div>
 
@@ -332,11 +335,11 @@
             </div>
         </section>
 
-        <!-- SUB-TAB 3: DATABASE LOGIN MURID (NAMA LENGKAP, KELAS, TOKEN) -->
+        <!-- SUB-TAB 3: DATABASE LOGIN MURID & DAFTAR KELAS AKTIF -->
         <section id="tab-murid" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 space-y-4 h-fit">
                 <h3 class="font-bold text-base text-slate-800 border-b pb-2">Tambah Murid ke Database</h3>
-                <p class="text-xs text-slate-500">Murid hanya dapat login menggunakan Nama Lengkap, Kelas, dan Token yang terdaftar di tab <b>DatabaseMurid</b>.</p>
+                <p class="text-xs text-slate-500">Daftar kelas di halaman login akan otomatis mengikuti kolom <b>Kelas</b> yang ada pada tab <b>DatabaseMurid</b> di Google Sheet.</p>
                 <div class="space-y-3">
                     <div>
                         <label class="block text-xs font-bold text-slate-600 mb-1">Nama Lengkap Murid</label>
@@ -345,12 +348,9 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-600 mb-1">Kelas</label>
-                        <input type="text" id="new-student-kelas" list="kelas-suggestions" placeholder="Contoh: 9.1"
+                        <input type="text" id="new-student-kelas" list="kelas-suggestions" placeholder="Contoh: 7A atau 9.1"
                             class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold focus:bg-white focus:border-blue-600 outline-none">
-                        <datalist id="kelas-suggestions">
-                            <option value="9.1">
-                            <option value="9.2">
-                        </datalist>
+                        <datalist id="kelas-suggestions"></datalist>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-600 mb-1">Token Login Murid</label>
@@ -364,19 +364,20 @@
             </div>
 
             <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-blue-100 space-y-4">
-                <div class="flex items-center justify-between">
+                <div class="flex flex-wrap items-center justify-between gap-2">
                     <div>
-                        <h3 class="font-bold text-base text-slate-800">Daftar Murid Terdaftar (Tab DatabaseMurid)</h3>
-                        <p class="text-xs text-slate-500">Anda juga dapat menyalin-tempel (copy-paste) ratusan nama murid sekaligus langsung di tab <b>DatabaseMurid</b> Google Sheet.</p>
+                        <h3 class="font-bold text-base text-slate-800">Daftar Murid & Kelas Aktif (Tab DatabaseMurid)</h3>
+                        <p class="text-xs text-slate-500">Ubah nama atau kelas langsung di tab <b>DatabaseMurid</b> Google Sheet; pilihan kelas di layar login akan ikut berubah.</p>
                     </div>
                 </div>
+                <div id="admin-active-classes-pills" class="flex flex-wrap items-center gap-1.5 text-xs"></div>
                 <div class="overflow-x-auto border border-slate-200 rounded-xl max-h-[420px]">
                     <table class="w-full text-left border-collapse text-xs">
                         <thead class="sticky top-0 bg-slate-100 text-slate-700 border-b border-slate-200">
                             <tr>
                                 <th class="p-3 font-bold w-14 text-center">No</th>
                                 <th class="p-3 font-bold">Nama Lengkap</th>
-                                <th class="p-3 font-bold w-24">Kelas</th>
+                                <th class="p-3 font-bold w-28">Kelas</th>
                                 <th class="p-3 font-bold w-36">Token</th>
                             </tr>
                         </thead>
@@ -420,10 +421,15 @@
                         <input type="number" id="admin-duration" min="5" max="300" placeholder="90"
                             class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold focus:bg-white focus:border-blue-600 outline-none">
                     </div>
-                    <div class="md:col-span-2">
+                    <div>
                         <label class="block text-xs font-bold text-slate-600 mb-1">Token Cadangan Global</label>
                         <input type="text" id="admin-token"
                             class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono font-bold text-blue-700 focus:bg-white focus:border-blue-600 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">Daftar Kelas Tambahan (Opsional)</label>
+                        <input type="text" id="admin-daftar-kelas" placeholder="Kosongkan agar 100% ikut DatabaseMurid"
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold focus:bg-white focus:border-blue-600 outline-none">
                     </div>
                 </div>
                 <div>
@@ -447,7 +453,7 @@
             <div class="bg-blue-900 text-white p-6 rounded-2xl shadow-sm space-y-3">
                 <h3 class="font-bold text-base text-amber-300">Panduan Database & Gambar Sheet</h3>
                 <ul class="list-disc list-inside text-xs text-blue-100 space-y-2 leading-relaxed">
-                    <li><b>Database Login Murid:</b> Isi tab <b>DatabaseMurid</b> dengan kolom <code>No</code>, <code>Nama Lengkap</code>, <code>Kelas</code>, dan <code>Token</code>.</li>
+                    <li><b>Pilihan Kelas Otomatis:</b> Ubah kolom <b>Kelas</b> di tab <b>DatabaseMurid</b> Google Sheet; pilihan kelas di layar login otomatis mengikuti data terbaru tersebut.</li>
                     <li><b>Gambar Soal & Pilihan:</b> Di tab <b>BankSoal</b>, isi <b>Kolom L (Gambar_Soal)</b> dan <b>Kolom M–Q (Gambar_A s/d E)</b> dengan link gambar atau link Google Drive publik.</li>
                     <li><b>Detail Jawaban Per Kolom:</b> Pada tab <b>HasilUjian</b>, setiap nomor soal otomatis terpisah di kolomnya masing-masing (<code>Jwb No. 1</code>, <code>Jwb No. 2</code>, dst.).</li>
                 </ul>
@@ -579,7 +585,7 @@
             </p>
             <button onclick="dismissViolationAlert()"
                 class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 rounded-xl text-sm shadow-lg">
-                Matikan Alarm & LanjuSASn Ujian
+                Matikan Alarm & Lanjutkan Ujian
             </button>
         </div>
     </div>
@@ -597,6 +603,7 @@
             subjectName: "Matematika",
             token: "Matematika9",
             duration: 90,
+            daftarKelas: "",
             webhookUrl: DEFAULT_WEBHOOK_URL
         };
 
@@ -608,8 +615,9 @@
             [5, "ESSAY", "Anggota pramuka ingin menaksir lebar sungai tanpa menyeberanginya menggunakan tongkat ukur dan konsep kesebangunan segitiga.", "", "Jelaskan langkah-langkah mengukur lebar sungai menggunakan konsep kesebangunan segitiga serta tuliskan perbandingan sisinya!", "", "", "", "Dinilai oleh Guru/Admin", "", 30, "", "", "", "", "", ""]
         ];
 
-        // Daftar peserta publik dari DatabaseMurid Sheet (hanya nama & kelas, tanpa token)
+        // Daftar peserta & daftar kelas dinamis dari DatabaseMurid Sheet
         let registeredStudents = [];
+        let dynamicKelasList = [];
 
         let studentState = {
             nama: "",
@@ -753,10 +761,10 @@
         }
 
         // =========================================================================
-        // 4. INISIALISASI & SINKRONISASI SOAL, PENGATURAN & DATABASE MURID
+        // 4. INISIALISASI & SINKRONISASI DAFTAR KELAS, SOAL & DATABASE MURID
         // =========================================================================
         window.addEventListener("DOMContentLoaded", async () => {
-            const saved = localStorage.getItem("cbt_SAS_config_v6");
+            const saved = localStorage.getItem("cbt_sas_config_v6");
             if (saved) {
                 const parsed = JSON.parse(saved);
                 appConfig = { ...appConfig, ...parsed };
@@ -765,49 +773,121 @@
                 }
             }
             applyConfigToUI();
+            await syncFromGoogleSheet(false);
+        });
 
-            if (appConfig.webhookUrl) {
-                try {
-                    const res = await fetch(appConfig.webhookUrl + "?action=getSoal");
-                    const data = await res.json();
+        async function syncFromGoogleSheet(isManualClick = false) {
+            const refreshBtn = document.getElementById("btn-refresh-kelas");
+            if (isManualClick && refreshBtn) {
+                refreshBtn.innerHTML = `<span>&#8635; Memuat...</span>`;
+            }
 
-                    if (data && data.config) {
-                        if (data.config.schoolName) appConfig.schoolName = String(data.config.schoolName);
-                        if (data.config.examType) appConfig.examType = String(data.config.examType);
-                        if (data.config.subjectName) appConfig.subjectName = String(data.config.subjectName);
-                        if (data.config.token) appConfig.token = String(data.config.token);
-                        if (data.config.duration) appConfig.duration = Number(data.config.duration) || 90;
-                        localStorage.setItem("cbt_SAS_config_v6", JSON.stringify(appConfig));
-                        applyConfigToUI();
-                    }
+            if (!appConfig.webhookUrl) {
+                populateKelasDropdownFromDatabase();
+                if (isManualClick && refreshBtn) refreshBtn.innerHTML = `<span>&#8635; Segarkan Kelas</span>`;
+                return;
+            }
 
-                    if (data && Array.isArray(data.peserta)) {
-                        registeredStudents = data.peserta;
-                        populateKelasDropdownFromDatabase();
-                    }
+            try {
+                const cacheBuster = Date.now();
+                const res = await fetch(`${appConfig.webhookUrl}?action=getSoal&_t=${cacheBuster}`);
+                const data = await res.json();
 
-                    const soalRows = Array.isArray(data) ? data : (data && Array.isArray(data.soal) ? data.soal : []);
-                    if (soalRows.length > 1) {
-                        bankSoal = soalRows.slice(1);
-                        updateSyncBadge(true, `Sheet Aktif (${bankSoal.length} Soal • ${registeredStudents.length} Murid)`);
-                    }
-                } catch (err) {
-                    updateSyncBadge(true, "Sheet Siap");
+                if (data && data.config) {
+                    if (data.config.schoolName) appConfig.schoolName = String(data.config.schoolName);
+                    if (data.config.examType) appConfig.examType = String(data.config.examType);
+                    if (data.config.subjectName) appConfig.subjectName = String(data.config.subjectName);
+                    if (data.config.token) appConfig.token = String(data.config.token);
+                    if (data.config.duration) appConfig.duration = Number(data.config.duration) || 90;
+                    appConfig.daftarKelas = data.config.daftarKelas !== undefined ? String(data.config.daftarKelas) : "";
+                    localStorage.setItem("cbt_sas_config_v6", JSON.stringify(appConfig));
+                    applyConfigToUI();
+                }
+
+                if (data && Array.isArray(data.peserta)) {
+                    registeredStudents = data.peserta;
+                }
+
+                if (data && Array.isArray(data.kelasList)) {
+                    dynamicKelasList = data.kelasList;
+                }
+
+                populateKelasDropdownFromDatabase();
+
+                const soalRows = Array.isArray(data) ? data : (data && Array.isArray(data.soal) ? data.soal : []);
+                if (soalRows.length > 1) {
+                    bankSoal = soalRows.slice(1);
+                }
+                updateSyncBadge(true, `Sheet Aktif (${dynamicKelasList.length} Kelas • ${registeredStudents.length} Murid)`);
+            } catch (err) {
+                populateKelasDropdownFromDatabase();
+                updateSyncBadge(true, "Sheet Siap");
+            } finally {
+                if (isManualClick && refreshBtn) {
+                    refreshBtn.innerHTML = `<span>&#8635; Tersinkronisasi</span>`;
+                    setTimeout(() => {
+                        refreshBtn.innerHTML = `<span>&#8635; Segarkan Kelas</span>`;
+                    }, 1500);
                 }
             }
-        });
+        }
+
+        function formatKelasOptionLabel(rawKelas) {
+            const clean = String(rawKelas || "").trim();
+            if (!clean) return "";
+            return /^kelas\s+/i.test(clean) ? clean : `Kelas ${clean}`;
+        }
+
+        function getActiveClassesSorted() {
+            const uniqueMap = new Map();
+
+            // 1. Ambil daftar kelas dari server (DatabaseMurid + Pengaturan daftarKelas)
+            dynamicKelasList.forEach(k => {
+                const clean = String(k || "").trim();
+                if (clean && !uniqueMap.has(clean.toLowerCase())) {
+                    uniqueMap.set(clean.toLowerCase(), clean);
+                }
+            });
+
+            // 2. Pastikan seluruh kelas dari registeredStudents juga masuk
+            registeredStudents.forEach(p => {
+                const clean = String(p.kelas || "").trim();
+                if (clean && !uniqueMap.has(clean.toLowerCase())) {
+                    uniqueMap.set(clean.toLowerCase(), clean);
+                }
+            });
+
+            // 3. Fallback hanya jika URL Sheet belum diisi (Mode Lokal)
+            if (uniqueMap.size === 0 && !appConfig.webhookUrl) {
+                return ["9.1", "9.2"];
+            }
+
+            return Array.from(uniqueMap.values()).sort((a, b) =>
+                a.localeCompare(b, "id", { numeric: true, sensitivity: "base" })
+            );
+        }
 
         function populateKelasDropdownFromDatabase() {
             const selectKelas = document.getElementById("input-kelas");
             const currentVal = selectKelas.value;
-            const kelasSet = new Set(["9.1", "9.2"]);
-            registeredStudents.forEach(p => {
-                if (p.kelas) kelasSet.add(String(p.kelas).trim());
-            });
+            const sortedKelas = getActiveClassesSorted();
 
-            const sortedKelas = Array.from(kelasSet).sort();
-            selectKelas.innerHTML = `<option value="" disabled ${!currentVal ? "selected" : ""}>-- Pilih Kelas Anda --</option>` +
-                sortedKelas.map(k => `<option value="${k}" ${currentVal === k ? "selected" : ""}>Kelas ${k}</option>`).join("");
+            if (sortedKelas.length === 0) {
+                selectKelas.innerHTML = `<option value="" disabled selected>-- Belum Ada Kelas di DatabaseMurid --</option>`;
+            } else {
+                const stillExists = sortedKelas.includes(currentVal);
+                selectKelas.innerHTML =
+                    `<option value="" disabled ${!stillExists ? "selected" : ""}>-- Pilih Kelas Anda (${sortedKelas.length} Kelas) --</option>` +
+                    sortedKelas.map(k =>
+                        `<option value="${k}" ${stillExists && currentVal === k ? "selected" : ""}>${formatKelasOptionLabel(k)}</option>`
+                    ).join("");
+            }
+
+            // Sinkronkan juga saran kelas di Panel Admin
+            const kelasSuggestions = document.getElementById("kelas-suggestions");
+            if (kelasSuggestions) {
+                kelasSuggestions.innerHTML = sortedKelas.map(k => `<option value="${k}">`).join("");
+            }
 
             onLoginKelasChange();
         }
@@ -824,12 +904,12 @@
             }
 
             const filtered = selectedKelas
-                ? registeredStudents.filter(p => String(p.kelas).trim() === selectedKelas)
+                ? registeredStudents.filter(p => String(p.kelas).trim().toLowerCase() === selectedKelas.toLowerCase())
                 : registeredStudents;
 
             datalist.innerHTML = filtered.map(p => `<option value="${p.nama}">`).join("");
             hint.textContent = selectedKelas
-                ? `*Database Kelas ${selectedKelas}: ${filtered.length} murid terdaftar (pilih dari daftar atau ketik nama lengkap).`
+                ? `*Database ${formatKelasOptionLabel(selectedKelas)}: ${filtered.length} murid terdaftar (pilih dari daftar atau ketik nama lengkap).`
                 : `*Total ${registeredStudents.length} murid terdaftar di database (pilih kelas terlebih dahulu).`;
         }
 
@@ -896,7 +976,6 @@
                     verifiedNama = check.nama || namaInput;
                     verifiedKelas = check.kelas || kelasInput;
                 } catch (err) {
-                    // Fallback jika jaringan sesaat terputus namun token global sesuai
                     if (tokenInput !== appConfig.token) {
                         errBox.textContent = "Gagal menghubungi server verifikasi atau Token salah.";
                         errBox.classList.remove("hidden");
@@ -906,7 +985,6 @@
                     }
                 }
             } else {
-                // Mode Lokal tanpa URL Sheet
                 if (tokenInput !== appConfig.token) {
                     errBox.textContent = "Token Soal tidak valid! Periksa kembali huruf besar/kecil token dari pengawas.";
                     errBox.classList.remove("hidden");
@@ -1206,7 +1284,7 @@
             });
 
             document.getElementById("res-nama").textContent = studentState.nama;
-            document.getElementById("res-kelas").textContent = "Kelas " + studentState.kelas;
+            document.getElementById("res-kelas").textContent = formatKelasOptionLabel(studentState.kelas);
             document.getElementById("res-pelanggaran").textContent = studentState.violations + "x";
             document.getElementById("res-sync-status").textContent = sent ? "Terkirim Real-Time ke Google Sheet" : "Tersimpan Lokal (URL Sheet Belum Diisi)";
 
@@ -1234,7 +1312,7 @@
             document.getElementById("input-nama").value = "";
             document.getElementById("input-kelas").value = "";
             document.getElementById("input-token").value = "";
-            onLoginKelasChange();
+            syncFromGoogleSheet(false);
             switchScreen("screen-login");
         }
 
@@ -1268,6 +1346,7 @@
             document.getElementById("admin-subject-name").value = appConfig.subjectName;
             document.getElementById("admin-duration").value = appConfig.duration;
             document.getElementById("admin-token").value = appConfig.token;
+            document.getElementById("admin-daftar-kelas").value = appConfig.daftarKelas || "";
             document.getElementById("admin-webhook-url").value = appConfig.webhookUrl;
             document.getElementById("new-student-token").value = appConfig.token;
             switchScreen("screen-admin");
@@ -1276,7 +1355,12 @@
 
         function exitAdminPanel() {
             stopLoudAlarm();
-            switchScreen(studentState.isExamActive ? "screen-exam" : "screen-login");
+            if (!studentState.isExamActive) {
+                syncFromGoogleSheet(false);
+                switchScreen("screen-login");
+            } else {
+                switchScreen("screen-exam");
+            }
         }
 
         function switchAdminTab(tabId) {
@@ -1295,9 +1379,10 @@
             appConfig.subjectName = document.getElementById("admin-subject-name").value.trim() || "Matematika";
             appConfig.duration = Number(document.getElementById("admin-duration").value) || 90;
             appConfig.token = document.getElementById("admin-token").value.trim() || "Matematika9";
+            appConfig.daftarKelas = document.getElementById("admin-daftar-kelas").value.trim();
             appConfig.webhookUrl = document.getElementById("admin-webhook-url").value.trim();
 
-            localStorage.setItem("cbt_SAS_config_v6", JSON.stringify(appConfig));
+            localStorage.setItem("cbt_sas_config_v6", JSON.stringify(appConfig));
             applyConfigToUI();
 
             if (appConfig.webhookUrl) {
@@ -1307,10 +1392,12 @@
                     examType: appConfig.examType,
                     subjectName: appConfig.subjectName,
                     duration: appConfig.duration,
-                    token: appConfig.token
+                    token: appConfig.token,
+                    daftarKelas: appConfig.daftarKelas
                 });
+                setTimeout(fetchLiveResultsFromSheet, 1200);
             }
-            alert("Profil sekolah, jenis ujian, mata pelajaran, durasi, dan token berhasil disimpan & disinkronkan!");
+            alert("Pengaturan berhasil disimpan & disinkronkan!");
         }
 
         async function addStudentToDatabase() {
@@ -1335,7 +1422,7 @@
             });
 
             document.getElementById("new-student-nama").value = "";
-            alert(`Murid "${nama}" (Kelas ${kelas}) berhasil ditambahkan ke DatabaseMurid!`);
+            alert(`Murid "${nama}" (${formatKelasOptionLabel(kelas)}) berhasil ditambahkan ke DatabaseMurid!`);
             setTimeout(fetchLiveResultsFromSheet, 1500);
         }
 
@@ -1346,17 +1433,18 @@
                 return;
             }
             appConfig.webhookUrl = url;
+            const firstKelas = getActiveClassesSorted()[0] || "9.1";
             const ok = await sendPayloadToSheet({
                 action: "SUBMIT",
                 nama: "Tes Koneksi Admin",
-                kelas: "9.1",
+                kelas: firstKelas,
                 token: appConfig.token,
                 jawabanMurid: { "1": "C", "2": "A,B,D", "3": "BENAR,BENAR,SALAH", "4": "4,4", "5": "Tes uraian dari Admin." },
                 pelanggaran: 0,
                 logPelanggaran: "-"
             });
             if (ok) {
-                alert("Data uji coba terkirim ke Sheet (kolom jawaban terpisah per nomor)! Tunggu 2 detik lalu data akan dimuat otomatis.");
+                alert("Data uji coba terkirim ke Sheet! Tunggu 2 detik lalu data akan dimuat otomatis.");
                 setTimeout(fetchLiveResultsFromSheet, 2000);
             }
         }
@@ -1367,13 +1455,16 @@
                 tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-amber-600 font-semibold">URL Web App Google Sheet belum diisi pada tab Pengaturan.</td></tr>`;
                 return;
             }
-            tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-blue-600 font-semibold">Menarik data terbaru, database murid & analisis soal dari Google Sheet...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-blue-600 font-semibold">Menarik data terbaru, daftar kelas & database murid dari Google Sheet...</td></tr>`;
             try {
-                const res = await fetch(appConfig.webhookUrl + "?action=getHasil");
+                const res = await fetch(`${appConfig.webhookUrl}?action=getHasil&_t=${Date.now()}`);
                 const data = await res.json();
 
                 adminHasilData = Array.isArray(data.hasil) ? data.hasil.reverse() : [];
                 adminMuridData = Array.isArray(data.murid) ? data.murid : [];
+                if (Array.isArray(data.kelasList)) {
+                    dynamicKelasList = data.kelasList;
+                }
                 adminSoalMeta = Array.isArray(data.soal) && data.soal.length > 0
                     ? data.soal
                     : bankSoal.map(s => ({
@@ -1384,7 +1475,7 @@
                         bobot: Number(s[10]) || 0
                     }));
 
-                // Perbarui daftar murid publik untuk halaman login
+                // Perbarui daftar murid publik & pilihan kelas untuk halaman login
                 registeredStudents = adminMuridData.map(m => ({ nama: m.nama, kelas: m.kelas }));
                 populateKelasDropdownFromDatabase();
 
@@ -1415,6 +1506,16 @@
 
         function renderAdminMuridTable() {
             const tbody = document.getElementById("admin-murid-table");
+            const pillsBox = document.getElementById("admin-active-classes-pills");
+            const activeClasses = getActiveClassesSorted();
+
+            if (pillsBox) {
+                pillsBox.innerHTML = `<span class="font-bold text-slate-600 mr-1">Pilihan Kelas Aktif di Login:</span>` +
+                    (activeClasses.length > 0
+                        ? activeClasses.map(k => `<span class="px-2.5 py-1 rounded-full bg-blue-100 text-blue-800 font-bold">${formatKelasOptionLabel(k)}</span>`).join("")
+                        : `<span class="text-slate-400 italic">Belum ada kelas</span>`);
+            }
+
             if (adminMuridData.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400">Belum ada data murid di tab DatabaseMurid.</td></tr>`;
                 return;
@@ -1431,17 +1532,22 @@
 
         function renderAdminHasilTable() {
             const tbody = document.getElementById("admin-live-table");
-            const filterKelas = document.getElementById("filter-kelas-admin").value;
-
-            // Perbarui opsi filter kelas dinamis
             const filterSelect = document.getElementById("filter-kelas-admin");
-            const kelasSet = new Set(["9.1", "9.2"]);
-            adminHasilData.forEach(r => { if (r.kelas) kelasSet.add(String(r.kelas)); });
-            filterSelect.innerHTML = `<option value="ALL" ${filterKelas === "ALL" ? "selected" : ""}>Semua Kelas</option>` +
-                Array.from(kelasSet).sort().map(k => `<option value="${k}" ${filterKelas === k ? "selected" : ""}>Kelas ${k} Saja</option>`).join("");
+            const filterKelas = filterSelect.value;
+
+            // Perbarui opsi filter kelas secara dinamis dari DatabaseMurid + HasilUjian
+            const kelasSet = new Set(getActiveClassesSorted());
+            adminHasilData.forEach(r => { if (r.kelas) kelasSet.add(String(r.kelas).trim()); });
+            const sortedFilterKelas = Array.from(kelasSet).sort((a, b) =>
+                a.localeCompare(b, "id", { numeric: true, sensitivity: "base" })
+            );
+
+            const validFilter = sortedFilterKelas.includes(filterKelas) ? filterKelas : "ALL";
+            filterSelect.innerHTML = `<option value="ALL" ${validFilter === "ALL" ? "selected" : ""}>Semua Kelas</option>` +
+                sortedFilterKelas.map(k => `<option value="${k}" ${validFilter === k ? "selected" : ""}>${formatKelasOptionLabel(k)}</option>`).join("");
 
             const filtered = adminHasilData.map((item, originalIdx) => ({ ...item, originalIdx }))
-                .filter(r => filterKelas === "ALL" || String(r.kelas) === filterKelas);
+                .filter(r => validFilter === "ALL" || String(r.kelas).trim() === validFilter);
 
             if (filtered.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400">Belum ada data murid masuk untuk filter ini.</td></tr>`;
@@ -1479,7 +1585,7 @@
             const r = adminHasilData[idx];
             if (!r) return;
 
-            document.getElementById("modal-essay-student").textContent = `Peserta: ${r.nama} (Kelas ${r.kelas}) • Waktu: ${r.waktu}`;
+            document.getElementById("modal-essay-student").textContent = `Peserta: ${r.nama} (${formatKelasOptionLabel(r.kelas)}) • Waktu: ${r.waktu}`;
             document.getElementById("modal-essay-answer-box").textContent = r.jawabanEssay || "(Murid tidak mengisi jawaban essay)";
             document.getElementById("modal-essay-max-hint").textContent = `Skor otomatis (PG/PGK/BS/Isian): ${r.skorOtomatis} poin`;
             document.getElementById("input-essay-score").value = r.nilaiEssay !== "" ? r.nilaiEssay : "";
@@ -1637,4 +1743,3 @@
     </script>
 </body>
 </html>
-
