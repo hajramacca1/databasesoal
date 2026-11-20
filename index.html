@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CBT TKA - Tes Kemampuan Akademik</title>
+    <title>CBT SAS - Sumatif Akhir Semester </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -24,22 +24,20 @@
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-white text-blue-800 flex items-center justify-center font-extrabold text-lg shadow-sm">
-                    TKA
+                    SAS
                 </div>
                 <div>
-                    <h1 id="nav-school-name" class="font-bold text-base md:text-lg leading-tight tracking-wide">SMP NEGERI 1 NUSANTARA</h1>
-                    <p id="nav-exam-title" class="text-xs text-blue-200">Tes Kemampuan Akademik (TKA) - Matematika</p>
+                    <h1 id="nav-school-name" class="font-bold text-base md:text-lg leading-tight tracking-wide">UPTD SMP NEGERI 13 SINJAI</h1>
+                    <p id="nav-exam-title" class="text-xs text-blue-200">Sumatif Akhir Semester (SAS)- Matematika</p>
                 </div>
             </div>
 
             <div class="flex items-center gap-3">
-                <!-- Indikator Status Koneksi Sheet -->
                 <div id="sync-badge" class="hidden sm:flex items-center gap-1.5 bg-blue-900/70 border border-blue-600 px-3 py-1.5 rounded-full text-xs">
                     <span id="sync-dot" class="w-2 h-2 rounded-full bg-amber-400"></span>
                     <span id="sync-text" class="text-blue-100 font-medium">Mode Lokal</span>
                 </div>
 
-                <!-- Tombol Admin (Dilindungi Password) -->
                 <button id="btn-admin-nav" onclick="openAdminAuthModal()" class="bg-white/10 hover:bg-white/20 border border-white/25 text-white px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                     Admin & Sheet
@@ -58,7 +56,7 @@
                     Computer Based Test
                 </span>
                 <h2 class="text-2xl font-extrabold">Login Peserta Ujian</h2>
-                <p id="login-school-sub" class="text-blue-100 text-xs mt-1">SMP NEGERI 1 NUSANTARA</p>
+                <p id="login-school-sub" class="text-blue-100 text-xs mt-1">UPTD SMP NEGERI 13 SINJAI</p>
             </div>
 
             <form onsubmit="handleStudentLogin(event)" class="p-6 space-y-4">
@@ -93,7 +91,7 @@
                     <p class="font-bold">Peraturan Ujian:</p>
                     <ul class="list-disc list-inside text-[11px] text-blue-700 space-y-0.5">
                         <li>Dilarang berpindah tab browser atau membuka aplikasi lain.</li>
-                        <li>Setiap pelanggaran tercatat otomatis ke server pengawas.</li>
+                        <li>Klik pada gambar soal/pilihan jika ingin memperbesar tampilan gambar.</li>
                     </ul>
                 </div>
 
@@ -109,9 +107,7 @@
     <!-- 2. HALAMAN PENGERJAAN UJIAN                                           -->
     <!-- ===================================================================== -->
     <main id="screen-exam" class="hidden flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-4 gap-5">
-        <!-- Kolom Kiri (3 Bagian): Area Soal -->
         <div class="lg:col-span-3 flex flex-col gap-4">
-            <!-- Bar Info Peserta & Timer -->
             <div class="bg-white rounded-2xl p-4 shadow-sm border border-blue-100 flex flex-wrap items-center justify-between gap-3">
                 <div class="flex items-center gap-3">
                     <div class="bg-blue-100 text-blue-800 font-extrabold px-3 py-1.5 rounded-lg text-sm" id="exam-q-badge">
@@ -135,13 +131,9 @@
                 </div>
             </div>
 
-            <!-- Kartu Konten Stimulus & Pertanyaan -->
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-blue-100 flex-1 flex flex-col justify-between">
-                <div id="exam-question-container" class="space-y-4">
-                    <!-- Konten soal dirender dinamis oleh JavaScript -->
-                </div>
+                <div id="exam-question-container" class="space-y-4"></div>
 
-                <!-- Navigasi Sebelumnya / Selanjutnya -->
                 <div class="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
                     <button onclick="prevQuestion()" id="btn-prev"
                         class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-slate-50 disabled:opacity-40 transition">
@@ -155,15 +147,12 @@
             </div>
         </div>
 
-        <!-- Kolom Kanan (1 Bagian): Navigasi Nomor Soal -->
         <aside class="bg-white rounded-2xl p-5 shadow-sm border border-blue-100 h-fit sticky top-20">
             <h3 class="font-bold text-sm text-slate-800 mb-3 flex items-center justify-between">
                 <span>Navigasi Soal</span>
                 <span id="exam-progress-text" class="text-xs text-blue-700 font-extrabold">0/0 Terjawab</span>
             </h3>
-            <div id="exam-nav-grid" class="grid grid-cols-5 gap-2 mb-5">
-                <!-- Tombol nomor soal -->
-            </div>
+            <div id="exam-nav-grid" class="grid grid-cols-5 gap-2 mb-5"></div>
             <div class="space-y-1.5 text-[11px] text-slate-500 border-t border-slate-100 pt-3 mb-5">
                 <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-blue-700 inline-block"></span> Sedang dibuka</div>
                 <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-emerald-500 inline-block"></span> Sudah dijawab</div>
@@ -177,7 +166,7 @@
     </main>
 
     <!-- ===================================================================== -->
-    <!-- 3. HALAMAN SELESAI UJIAN (KONFIRMASI KE MURID)                        -->
+    <!-- 3. HALAMAN SELESAI UJIAN                                              -->
     <!-- ===================================================================== -->
     <main id="screen-result" class="hidden flex-1 flex items-center justify-center p-4">
         <div class="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-blue-100 p-8 text-center space-y-5">
@@ -196,7 +185,7 @@
                 <div class="flex justify-between"><span class="text-slate-500">Status Pengiriman:</span> <strong id="res-sync-status" class="text-emerald-600">Terkirim ke Google Sheet</strong></div>
             </div>
 
-            <p class="text-xs text-slate-400">Nilai akhir (termasuk penilaian soal Essay) akan diumumkan oleh guru mata pelajaran.</p>
+            <p class="text-xs text-slate-400">Nilai akhir (termasuk pemeriksaan soal Essay) akan diumumkan oleh guru mata pelajaran.</p>
 
             <button onclick="resetToLogin()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 rounded-xl text-sm transition">
                 Kembali ke Halaman Login
@@ -205,23 +194,145 @@
     </main>
 
     <!-- ===================================================================== -->
-    <!-- 4. PANEL ADMIN & MONITORING SHEET (DILINDUNGI PASSWORD)               -->
+    <!-- 4. PANEL ADMIN: NILAI ESSAY, ANALISIS SOAL PER NOMOR & PENGATURAN     -->
     <!-- ===================================================================== -->
-    <main id="screen-admin" class="hidden flex-1 max-w-7xl w-full mx-auto p-4 space-y-6">
+    <main id="screen-admin" class="hidden flex-1 max-w-7xl w-full mx-auto p-4 space-y-5">
+        <!-- Header Admin -->
         <div class="flex flex-wrap items-center justify-between gap-4 bg-white p-5 rounded-2xl shadow-sm border border-blue-100">
             <div>
-                <h2 class="text-xl font-extrabold text-blue-900">Panel Admin & Sinkronisasi Google Sheet</h2>
-                <p class="text-xs text-slate-500">Kelola profil sekolah, token soal, dan pantau nilai serta pelanggaran murid dari seluruh perangkat.</p>
+                <h2 class="text-xl font-extrabold text-blue-900">Panel Guru & Admin CBT SAS</h2>
+                <p class="text-xs text-slate-500">Pemeriksaan nilai essay, analisis ketuntasan per nomor soal, dan sinkronisasi Google Sheet.</p>
             </div>
-            <button onclick="exitAdminPanel()" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition">
-                Kunci & Keluar Admin
+            <div class="flex items-center gap-2.5">
+                <button onclick="fetchLiveResultsFromSheet()" class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2.5 rounded-xl text-xs font-bold transition">
+                    &#8635; Muat Ulang Data Sheet
+                </button>
+                <button onclick="exitAdminPanel()" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition">
+                    Kunci & Keluar Admin
+                </button>
+            </div>
+        </div>
+
+        <!-- Ringkasan Statistik Cepat -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded-2xl border border-blue-100 shadow-sm">
+                <p class="text-[11px] font-bold text-slate-400 uppercase">Total Peserta Masuk</p>
+                <p id="stat-total-peserta" class="text-2xl font-extrabold text-blue-900 mt-1">0</p>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-blue-100 shadow-sm">
+                <p class="text-[11px] font-bold text-slate-400 uppercase">Rata-Rata Nilai Akhir</p>
+                <p id="stat-rata-nilai" class="text-2xl font-extrabold text-emerald-700 mt-1">0</p>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-blue-100 shadow-sm">
+                <p class="text-[11px] font-bold text-slate-400 uppercase">Menunggu Nilai Essay</p>
+                <p id="stat-pending-essay" class="text-2xl font-extrabold text-amber-600 mt-1">0</p>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-blue-100 shadow-sm">
+                <p class="text-[11px] font-bold text-slate-400 uppercase">Total Pelanggaran Terdeteksi</p>
+                <p id="stat-total-pelanggaran" class="text-2xl font-extrabold text-red-600 mt-1">0x</p>
+            </div>
+        </div>
+
+        <!-- Navigasi Sub-Tab Admin -->
+        <div class="flex flex-wrap gap-2 bg-white p-2 rounded-2xl border border-blue-100 shadow-sm w-fit">
+            <button onclick="switchAdminTab('tab-hasil')" id="btn-tab-hasil" class="px-4 py-2 rounded-xl text-xs font-bold bg-blue-700 text-white transition">
+                1. Daftar Nilai & Pemeriksaan Essay
+            </button>
+            <button onclick="switchAdminTab('tab-analisis')" id="btn-tab-analisis" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
+                2. Analisis Soal & Jawaban Per Nomor
+            </button>
+            <button onclick="switchAdminTab('tab-pengaturan')" id="btn-tab-pengaturan" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
+                3. Pengaturan Sekolah & Panduan Gambar
             </button>
         </div>
 
-        <!-- Grid Pengaturan Profil Sekolah & Webhook -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- SUB-TAB 1: DAFTAR NILAI & PENILAIAN ESSAY DI APLIKASI -->
+        <section id="tab-hasil" class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                    <h3 class="font-bold text-base text-slate-800">Daftar Hasil Ujian & Pemeriksaan Essay</h3>
+                    <p class="text-xs text-slate-500">Klik tombol <b>Periksa & Nilai Essay</b> pada baris murid untuk membaca jawaban uraian dan memberikan skor langsung ke Sheet.</p>
+                </div>
+                <select id="filter-kelas-admin" onchange="renderAdminHasilTable()" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold">
+                    <option value="ALL">Semua Kelas (9.1 & 9.2)</option>
+                    <option value="9.1">Kelas 9.1 Saja</option>
+                    <option value="9.2">Kelas 9.2 Saja</option>
+                </select>
+            </div>
+
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+                            <th class="p-3 font-bold">Waktu</th>
+                            <th class="p-3 font-bold">Nama Murid</th>
+                            <th class="p-3 font-bold">Kelas</th>
+                            <th class="p-3 font-bold text-center">Skor Otomatis</th>
+                            <th class="p-3 font-bold text-center bg-amber-50">Nilai Essay</th>
+                            <th class="p-3 font-bold text-center">Total Akhir</th>
+                            <th class="p-3 font-bold text-center">Pelanggaran</th>
+                            <th class="p-3 font-bold">Status</th>
+                            <th class="p-3 font-bold text-center">Aksi Guru</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-live-table" class="divide-y divide-slate-100">
+                        <tr><td colspan="9" class="p-6 text-center text-slate-400">Memuat data dari Google Sheet...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SUB-TAB 2: ANALISIS BUTIR SOAL & JAWABAN MURID PER NOMOR -->
+        <section id="tab-analisis" class="hidden space-y-6">
+            <!-- Bagian A: Statistik Ketuntasan Per Nomor Soal -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 space-y-4">
+                <div>
+                    <h3 class="font-bold text-base text-slate-800">A. Analisis Tingkat Kesukaran & Ketuntasan Per Nomor Soal</h3>
+                    <p class="text-xs text-slate-500">Dihitung otomatis dari seluruh murid yang telah menyelesaikan ujian.</p>
+                </div>
+                <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-blue-50 text-blue-900 border-b border-slate-200">
+                                <th class="p-3 font-bold w-16 text-center">No</th>
+                                <th class="p-3 font-bold w-28">Tipe Soal</th>
+                                <th class="p-3 font-bold">Cuplikan Pertanyaan</th>
+                                <th class="p-3 font-bold w-24">Kunci / Bobot</th>
+                                <th class="p-3 font-bold text-center w-24">Benar Penuh</th>
+                                <th class="p-3 font-bold text-center w-28">Ketuntasan (%)</th>
+                                <th class="p-3 font-bold text-center w-32">Tingkat Kesukaran</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-item-stats-table" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Bagian B: Matriks Jawaban Murid Per Nomor -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                        <h3 class="font-bold text-base text-slate-800">B. Matriks Jawaban Setiap Murid Per Nomor Soal</h3>
+                        <p class="text-xs text-slate-500">
+                            Keterangan warna: <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">Hijau = Benar</span>,
+                            <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold">Kuning = Sebagian / Essay</span>,
+                            <span class="px-2 py-0.5 rounded bg-red-100 text-red-800 font-bold">Merah = Salah / Kosong</span>.
+                        </p>
+                    </div>
+                </div>
+                <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                    <table class="w-full text-left border-collapse text-xs" id="admin-matrix-table">
+                        <thead id="admin-matrix-head"></thead>
+                        <tbody id="admin-matrix-body" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUB-TAB 3: PENGATURAN SEKOLAH & PANDUAN MENAMBAH GAMBAR -->
+        <section id="tab-pengaturan" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-blue-100 space-y-4">
-                <h3 class="font-bold text-base text-slate-800 border-b pb-2">1. Edit Profil Sekolah & Konfigurasi Ujian</h3>
+                <h3 class="font-bold text-base text-slate-800 border-b pb-2">Pengaturan Profil Sekolah & Koneksi Sheet</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-600 mb-1">Nama Sekolah</label>
@@ -241,12 +352,9 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">URL Web App Google Apps Script (Real-Time Sheet)</label>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">URL Web App Google Apps Script</label>
                     <input type="url" id="admin-webhook-url" placeholder="https://script.google.com/macros/s/.../exec"
                         class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono">
-                    <p class="text-[11px] text-amber-700 mt-1">
-                        *Agar berlaku otomatis di semua HP/laptop murid, tempel juga URL ini pada variabel <code>DEFAULT_WEBHOOK_URL</code> di dalam file <code>index.html</code> sebelum di-hosting.
-                    </p>
                 </div>
                 <div class="flex flex-wrap gap-3 pt-2">
                     <button onclick="saveAdminSettings()" class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2.5 rounded-xl text-xs font-bold transition">
@@ -258,60 +366,75 @@
                 </div>
             </div>
 
-            <!-- Panduan Singkat Penilaian Essay -->
+            <!-- Panduan Cara Menambah Gambar di Google Sheet -->
             <div class="bg-blue-900 text-white p-6 rounded-2xl shadow-sm space-y-3">
-                <h3 class="font-bold text-base text-amber-300">Panduan Penilaian Essay di Sheet</h3>
-                <ol class="list-decimal list-inside text-xs text-blue-100 space-y-2 leading-relaxed">
-                    <li>Soal <b>PG, PGK, Benar-Salah, dan Isian</b> otomatis dikoreksi sistem dan masuk ke kolom <b>Skor Otomatis</b>.</li>
-                    <li>Jawaban ketikan <b>Essay</b> murid masuk ke kolom <b>Jawaban Essay Murid</b>.</li>
-                    <li>Buka Google Sheet tab <b>HasilUjian</b>, ketikkan nilai essay pada sel berwarna <b>Kuning (Kolom G)</b>.</li>
-                    <li>Kolom <b>TOTAL NILAI AKHIR (Kolom H)</b> akan otomatis menjumlahkan skor secara instan.</li>
-                </ol>
+                <h3 class="font-bold text-base text-amber-300">Cara Menambahkan Gambar pada Soal & Pilihan</h3>
+                <p class="text-xs text-blue-100 leading-relaxed">
+                    Buka Google Sheet pada tab <b>BankSoal</b>, lalu masukkan link gambar (bisa langsung menggunakan <b>Link Berbagi Google Drive</b> yang diatur ke <i>"Siapa saja yang memiliki link"</i>):
+                </p>
+                <ul class="list-disc list-inside text-xs text-blue-100 space-y-1.5">
+                    <li><b>Kolom L (Gambar_Soal):</b> Tempel link gambar untuk soal/stimulus.</li>
+                    <li><b>Kolom M s/d Q (Gambar_A s/d Gambar_E):</b> Tempel link gambar untuk masing-masing pilihan jawaban A, B, C, D, atau E.</li>
+                    <li>Pilihan jawaban boleh berisi <b>gambar saja</b> (teks dikosongkan) maupun kombinasi teks + gambar.</li>
+                </ul>
             </div>
-        </div>
-
-        <!-- Tabel Monitoring Real-Time dari Google Sheet -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 space-y-4">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-                <div>
-                    <h3 class="font-bold text-base text-slate-800">2. Monitoring Nilai & Pelanggaran (Semua Perangkat)</h3>
-                    <p class="text-xs text-slate-500">Data ditarik langsung dari tab <b>HasilUjian</b> pada Google Sheet Anda.</p>
-                </div>
-                <button onclick="fetchLiveResultsFromSheet()" class="bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-xl text-xs font-bold transition">
-                    &#8635; Muat Ulang Data Sheet
-                </button>
-            </div>
-
-            <div class="overflow-x-auto border border-slate-200 rounded-xl">
-                <table class="w-full text-left border-collapse text-xs">
-                    <thead>
-                        <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
-                            <th class="p-3 font-bold">Waktu</th>
-                            <th class="p-3 font-bold">Nama Murid</th>
-                            <th class="p-3 font-bold">Kelas</th>
-                            <th class="p-3 font-bold">Skor Otomatis</th>
-                            <th class="p-3 font-bold">Jawaban Essay</th>
-                            <th class="p-3 font-bold bg-amber-50">Nilai Essay</th>
-                            <th class="p-3 font-bold">Total Akhir</th>
-                            <th class="p-3 font-bold">Pelanggaran</th>
-                            <th class="p-3 font-bold">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="admin-live-table" class="divide-y divide-slate-100">
-                        <tr><td colspan="9" class="p-6 text-center text-slate-400">Klik "Muat Ulang Data Sheet" untuk menampilkan hasil terbaru.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </section>
     </main>
 
     <!-- ===================================================================== -->
-    <!-- MODAL VERIFIKASI PASSWORD ADMIN (hajra03)                             -->
+    <!-- MODAL PEMERIKSAAN & PENILAIAN ESSAY OLEH GURU                         -->
     <!-- ===================================================================== -->
+    <div id="modal-grade-essay" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b pb-3">
+                <div>
+                    <h3 class="font-extrabold text-lg text-blue-900">Pemeriksaan & Penilaian Essay</h3>
+                    <p id="modal-essay-student" class="text-xs text-slate-500 font-semibold">-</p>
+                </div>
+                <button onclick="closeEssayModal()" class="text-slate-400 hover:text-slate-700 font-bold text-lg">&times;</button>
+            </div>
+
+            <!-- Daftar Soal Essay & Rubrik Penilaian -->
+            <div id="modal-essay-rubric-box" class="bg-blue-50 border border-blue-100 rounded-xl p-4 text-xs space-y-2"></div>
+
+            <!-- Jawaban Uraian Murid -->
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Jawaban Uraian / Essay Murid:</label>
+                <div id="modal-essay-answer-box" class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-800 whitespace-pre-wrap leading-relaxed min-h-[100px]"></div>
+            </div>
+
+            <!-- Input Skor Essay -->
+            <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <label class="block text-xs font-extrabold text-amber-900 uppercase">Input Nilai Essay Murid</label>
+                    <p id="modal-essay-max-hint" class="text-[11px] text-amber-700">Skor otomatis PG/Isian murid ini: 0</p>
+                </div>
+                <input type="number" id="input-essay-score" min="0" max="100" step="1" placeholder="0"
+                    class="w-32 px-4 py-2.5 bg-white border-2 border-amber-400 rounded-xl text-lg font-extrabold text-center text-blue-900 outline-none focus:border-blue-600">
+            </div>
+
+            <div class="flex justify-end gap-2.5 pt-2">
+                <button onclick="closeEssayModal()" class="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100">Batal</button>
+                <button onclick="submitEssayGrade()" id="btn-save-essay-grade" class="px-6 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-md transition">
+                    Simpan Nilai Essay ke Sheet
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ZOOM GAMBAR SOAL / PILIHAN -->
+    <div id="modal-image-zoom" onclick="this.classList.add('hidden')" class="hidden fixed inset-0 bg-slate-950/85 z-50 flex items-center justify-center p-4 cursor-zoom-out">
+        <div class="max-w-4xl max-h-[90vh] flex flex-col items-center gap-2">
+            <img id="zoomed-img-preview" src="" alt="Perbesaran Gambar" class="max-w-full max-h-[82vh] rounded-xl shadow-2xl bg-white p-1">
+            <span class="text-white text-xs bg-slate-800/80 px-3 py-1 rounded-full">Klik di mana saja untuk menutup</span>
+        </div>
+    </div>
+
+    <!-- MODAL VERIFIKASI PASSWORD ADMIN (hajra03) -->
     <div id="modal-admin-auth" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4">
             <h3 class="font-extrabold text-lg text-slate-800">Akses Terbatas Admin</h3>
-            <p class="text-xs text-slate-500">Masukkan kata sandi admin untuk membuka pengaturan sekolah dan data Google Sheet.</p>
+            <p class="text-xs text-slate-500">Masukkan kata sandi admin untuk membuka pemeriksaan nilai essay, analisis soal, dan pengaturan sheet.</p>
             <div id="admin-auth-error" class="hidden bg-red-50 text-red-700 text-xs font-bold p-2.5 rounded-lg">
                 Kata sandi salah! Akses ditolak.
             </div>
@@ -331,11 +454,11 @@
             <div class="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto font-extrabold text-2xl">!</div>
             <h3 class="font-extrabold text-xl text-red-700">PERINGATAN PELANGGARAN!</h3>
             <p class="text-sm text-slate-600">
-                Sistem mendeteksi Anda meninggalkan layar ujian / berpindah tab. Kejadian ini telah dikirim secara <b>real-time</b> ke Google Sheet Pengawas!
+                Sistem mendeteksi Anda meninggalkan layar ujian / berpindah tab. Kejadian ini tercatat otomatis ke Google Sheet Pengawas!
             </p>
             <button onclick="document.getElementById('modal-violation-alert').classList.add('hidden')"
                 class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl text-sm">
-                Saya Mengerti & Lanjutkan Ujian
+                Saya Mengerti & LanjuSASn Ujian
             </button>
         </div>
     </div>
@@ -348,23 +471,23 @@
         const ADMIN_PASSWORD = "hajra03";
 
         let appConfig = {
-            schoolName: "SMP NEGERI 1 NUSANTARA",
-            examTitle: "Tes Kemampuan Akademik (TKA) - Matematika",
+            schoolName: "UPTD SMP NEGERI 13 SINJAI",
+            examTitle: "Sumatif Akhir Semester (SAS)- Matematika",
             token: "Matematika9",
             duration: 90,
             webhookUrl: DEFAULT_WEBHOOK_URL
         };
 
-        // Fallback Bank Soal bawaan (otomatis terganti oleh data dari tab BankSoal Google Sheet jika terhubung)
+        // Struktur 17 Kolom BankSoal:
+        // [0:No, 1:Tipe, 2:Stimulus, 3:OpsiA, 4:Pertanyaan|B, 5:OpsiC, 6:OpsiD, 7:OpsiE, 8:Ket, 9:Kunci, 10:Bobot, 11:ImgSoal, 12:ImgA, 13:ImgB, 14:ImgC, 15:ImgD, 16:ImgE]
         let bankSoal = [
-            [1, "PG", "Amoeba proteus berkembang biak dengan membelah diri menjadi 2 setiap 20 menit. Budi meletakkan 1 ekor Amoeba di cawan petri pada pukul 08.00 pagi.", "$2^4$", "Bentuk pangkat yang tepat untuk jumlah Amoeba pada pukul 10.00 pagi adalah... | B: $2^5$", "$2^6$", "$2^7$", "", "Pilih satu jawaban", "", 15],
-            [2, "PGK", "Kapasitas penyimpanan digital menggunakan basis 2: 1 KB = $2^{10}$ Byte, 1 MB = $2^{20}$ Byte, 1 GB = $2^{30}$ Byte.", "512 MB setara dengan $2^{29}$ Byte", "Pilih semua pernyataan yang BENAR terkait flashdisk 16 GB! | B: Kapasitas total flashdisk 16 GB setara $2^{34}$ Byte", "2 GB setara dengan $2^{32}$ Byte", "Sisa kapasitas setelah diisi file 2 GB adalah $14 \\times 2^{30}$ Byte", "", "Pilih lebih dari satu jawaban", "", 20],
-            [3, "BENAR_SALAH", "Jarak rata-rata Bumi ke Matahari adalah 150.000.000 km dan kecepatan cahaya di ruang hampa adalah $3 \\times 10^5$ km/detik.", "Notasi ilmiah jarak Bumi ke Matahari adalah $1,5 \\times 10^8$ km", "Tentukan BENAR atau SALAH untuk setiap pernyataan berikut! | B: Waktu tempuh cahaya matahari ke Bumi adalah tepat 500 detik", "Dalam waktu 10 detik cahaya menempuh jarak $3 \\times 10^7$ km", "", "", "Tentukan Benar/Salah tiap baris", "", 20],
-            [4, "ISIAN", "Sebuah tandon air berbentuk tabung memiliki jari-jari 1 meter dan tinggi 1,4 meter ($\\pi = 22/7$).", "", "Berapa meter kubik ($m^3$) volume maksimal air yang dapat ditampung tandon tersebut? (Tulis angkanya saja)", "", "", "", "Jawaban singkat", "", 15],
-            [5, "ESSAY", "Anggota pramuka ingin menaksir lebar sebuah sungai tanpa menyeberanginya dengan memanfaatkan tongkat ukur dan konsep kesebangunan segitiga.", "", "Jelaskan langkah-langkah mengukur lebar sungai menggunakan konsep kesebangunan segitiga serta tuliskan perbandingan sisi yang digunakan!", "", "", "", "Dinilai manual oleh Admin", "", 30]
+            [1, "PG", "Amoeba proteus berkembang biak dengan membelah diri menjadi 2 setiap 20 menit. Budi meletakkan 1 ekor Amoeba pada pukul 08.00 pagi.", "$2^4$", "Bentuk pangkat yang tepat untuk jumlah Amoeba pada pukul 10.00 pagi adalah... | B: $2^5$", "$2^6$", "$2^7$", "", "Pilih satu jawaban", "", 15, "", "", "", "", "", ""],
+            [2, "PGK", "Kapasitas penyimpanan digital berbasis 2: 1 KB = $2^{10}$ Byte, 1 MB = $2^{20}$ Byte, 1 GB = $2^{30}$ Byte.", "512 MB setara dengan $2^{29}$ Byte", "Pilih semua pernyataan yang BENAR terkait flashdisk 16 GB! | B: Kapasitas 16 GB setara $2^{34}$ Byte", "2 GB setara dengan $2^{32}$ Byte", "Sisa kapasitas setelah diisi 2 GB adalah $14 \\times 2^{30}$ Byte", "", "Pilih lebih dari satu jawaban", "", 20, "", "", "", "", "", ""],
+            [3, "BENAR_SALAH", "Jarak rata-rata Bumi ke Matahari adalah 150.000.000 km dan kecepatan cahaya $3 \\times 10^5$ km/detik.", "Notasi ilmiah jarak Bumi ke Matahari adalah $1,5 \\times 10^8$ km", "Tentukan BENAR atau SALAH untuk setiap pernyataan berikut! | B: Waktu tempuh cahaya matahari ke Bumi tepat 500 detik", "Dalam 10 detik cahaya menempuh jarak $3 \\times 10^7$ km", "", "", "Tentukan Benar/Salah tiap baris", "", 20, "", "", "", "", "", ""],
+            [4, "ISIAN", "Sebuah tandon air berbentuk tabung memiliki jari-jari 1 meter dan tinggi 1,4 meter ($\\pi = 22/7$).", "", "Berapa meter kubik ($m^3$) volume maksimal air yang dapat ditampung tandon tersebut? (Angkanya saja)", "", "", "", "Jawaban singkat", "", 15, "", "", "", "", "", ""],
+            [5, "ESSAY", "Anggota pramuka ingin menaksir lebar sungai tanpa menyeberanginya menggunakan tongkat ukur dan konsep kesebangunan segitiga.", "", "Jelaskan langkah-langkah mengukur lebar sungai menggunakan konsep kesebangunan segitiga serta tuliskan perbandingan sisinya!", "", "", "", "Dinilai oleh Guru/Admin", "", 30, "", "", "", "", "", ""]
         ];
 
-        // State Ujian Peserta
         let studentState = {
             nama: "",
             kelas: "",
@@ -378,11 +501,51 @@
             secondsLeft: 5400
         };
 
+        // Data Admin untuk Pemeriksaan Essay & Analisis Butir Soal
+        let adminHasilData = [];
+        let adminSoalMeta = [];
+        let activeEssayGradeIdx = -1;
+
         // =========================================================================
-        // 2. INISIALISASI & SINKRONISASI BANK SOAL DARI GOOGLE SHEET
+        // 2. HELPER GAMBAR (MENDUKUNG LINK DIRECT & LINK GOOGLE DRIVE)
+        // =========================================================================
+        function normalizeImageUrl(rawUrl) {
+            const url = String(rawUrl || "").trim();
+            if (!url) return "";
+            // Otomatis ubah link Google Drive (/file/d/ID/view atau ?id=ID) menjadi direct image URL
+            const driveMatch = url.match(/(?:\/d\/|id=)([a-zA-Z0-9_-]{20,})/);
+            if (url.includes("drive.google.com") && driveMatch && driveMatch[1]) {
+                return `https://lh3.googleusercontent.com/d/${driveMatch[1]}`;
+            }
+            return url;
+        }
+
+        function buildImageTag(rawUrl, altText, maxHeightClass = "max-h-64") {
+            const cleanUrl = normalizeImageUrl(rawUrl);
+            if (!cleanUrl) return "";
+            const driveMatch = String(rawUrl).match(/(?:\/d\/|id=)([a-zA-Z0-9_-]{20,})/);
+            const fallbackAttr = (driveMatch && driveMatch[1])
+                ? `onerror="this.onerror=null;this.src='https://drive.google.com/thumbnail?id=${driveMatch[1]}&sz=w1000';"`
+                : "";
+            return `
+                <div class="my-2">
+                    <img src="${cleanUrl}" ${fallbackAttr} alt="${altText}"
+                        onclick="event.preventDefault(); event.stopPropagation(); zoomImage('${cleanUrl}')"
+                        title="Klik untuk memperbesar gambar"
+                        class="${maxHeightClass} w-auto rounded-xl border border-slate-200 shadow-sm cursor-zoom-in hover:opacity-95 transition bg-white">
+                </div>`;
+        }
+
+        function zoomImage(src) {
+            document.getElementById("zoomed-img-preview").src = src;
+            document.getElementById("modal-image-zoom").classList.remove("hidden");
+        }
+
+        // =========================================================================
+        // 3. INISIALISASI & SINKRONISASI BANK SOAL
         // =========================================================================
         window.addEventListener("DOMContentLoaded", async () => {
-            const saved = localStorage.getItem("cbt_tka_config_v3");
+            const saved = localStorage.getItem("cbt_SAS_config_v4");
             if (saved) {
                 const parsed = JSON.parse(saved);
                 appConfig = { ...appConfig, ...parsed };
@@ -392,17 +555,16 @@
             }
             applyConfigToUI();
 
-            // Tarik daftar soal terbaru dari tab BankSoal Google Sheet secara otomatis
             if (appConfig.webhookUrl) {
                 try {
                     const res = await fetch(appConfig.webhookUrl + "?action=getSoal");
                     const rows = await res.json();
                     if (Array.isArray(rows) && rows.length > 1) {
-                        bankSoal = rows.slice(1); // Lewati baris header
+                        bankSoal = rows.slice(1);
                         updateSyncBadge(true, "Terhubung Sheet (" + bankSoal.length + " Soal)");
                     }
                 } catch (err) {
-                    updateSyncBadge(true, "Sheet Siap (Soal Default)");
+                    updateSyncBadge(true, "Sheet Siap");
                 }
             }
         });
@@ -426,7 +588,7 @@
         }
 
         // =========================================================================
-        // 3. LOGIN PESERTA & MULAI UJIAN
+        // 4. LOGIN & PENGERJAAN UJIAN (DENGAN GAMBAR PADA SOAL & PILIHAN)
         // =========================================================================
         async function handleStudentLogin(e) {
             e.preventDefault();
@@ -443,9 +605,7 @@
             errBox.classList.add("hidden");
 
             studentState = {
-                nama,
-                kelas,
-                token,
+                nama, kelas, token,
                 isExamActive: true,
                 currentIdx: 0,
                 answers: {},
@@ -455,7 +615,6 @@
                 secondsLeft: (Number(appConfig.duration) || 90) * 60
             };
 
-            // Kirim sinyal START ke Google Sheet secara real-time
             sendPayloadToSheet({
                 action: "START",
                 nama: studentState.nama,
@@ -486,9 +645,6 @@
             }, 1000);
         }
 
-        // =========================================================================
-        // 4. RENDER 5 JENIS SOAL (PG, PGK, BENAR_SALAH, ISIAN, ESSAY)
-        // =========================================================================
         function renderQuestion(idx) {
             studentState.currentIdx = idx;
             const soal = bankSoal[idx];
@@ -501,6 +657,14 @@
             const opsiD = soal[6] || "";
             const opsiE = soal[7] || "";
             const ket = soal[8] || "";
+
+            // Kolom Gambar (Indeks 11..16)
+            const imgSoal = soal[11] || "";
+            const imgA = soal[12] || "";
+            const imgB = soal[13] || "";
+            const imgC = soal[14] || "";
+            const imgD = soal[15] || "";
+            const imgE = soal[16] || "";
 
             const splitB = tanyaDanB.split("| B:");
             const pertanyaan = splitB[0].trim();
@@ -515,50 +679,56 @@
             if (stimulus) {
                 html += `<div class="bg-blue-50/70 border-l-4 border-blue-600 p-4 rounded-r-xl text-sm text-slate-700 leading-relaxed">${stimulus}</div>`;
             }
+            if (imgSoal) {
+                html += buildImageTag(imgSoal, `Gambar Soal No. ${no}`, "max-h-72");
+            }
             if (ket) {
                 html += `<div class="text-xs font-bold text-blue-700 uppercase tracking-wider">${ket}</div>`;
             }
             html += `<div class="text-base font-bold text-slate-800 leading-relaxed">${pertanyaan}</div>`;
 
             const daftarOpsi = [
-                { kode: "A", teks: opsiA },
-                { kode: "B", teks: opsiB },
-                { kode: "C", teks: opsiC },
-                { kode: "D", teks: opsiD },
-                { kode: "E", teks: opsiE }
-            ].filter(o => String(o.teks).trim() !== "");
+                { kode: "A", teks: opsiA, img: imgA },
+                { kode: "B", teks: opsiB, img: imgB },
+                { kode: "C", teks: opsiC, img: imgC },
+                { kode: "D", teks: opsiD, img: imgD },
+                { kode: "E", teks: opsiE, img: imgE }
+            ].filter(o => String(o.teks).trim() !== "" || String(o.img).trim() !== "");
 
             const savedAns = studentState.answers[no] || "";
 
-            // 1. PILIHAN GANDA (PG)
             if (tipe === "PG") {
                 html += `<div class="space-y-2.5 pt-2">`;
                 daftarOpsi.forEach(o => {
                     const checked = savedAns === o.kode ? "checked" : "";
+                    const imgHtml = o.img ? buildImageTag(o.img, `Gambar Pilihan ${o.kode}`, "max-h-40") : "";
                     html += `
                         <label class="flex items-start gap-3 p-3.5 rounded-xl border ${checked ? 'border-blue-600 bg-blue-50' : 'border-slate-200 hover:bg-slate-50'} cursor-pointer transition">
                             <input type="radio" name="q_${no}" value="${o.kode}" ${checked} onchange="saveAnswer('${no}', this.value)" class="mt-1 accent-blue-700">
-                            <span class="text-sm"><strong class="text-blue-800 mr-1">${o.kode}.</strong> ${o.teks}</span>
+                            <div class="text-sm flex-1">
+                                <div><strong class="text-blue-800 mr-1">${o.kode}.</strong> ${o.teks}</div>
+                                ${imgHtml}
+                            </div>
                         </label>`;
                 });
                 html += `</div>`;
-            }
-            // 2. PILIHAN GANDA KOMPLEKS (PGK)
-            else if (tipe === "PGK") {
+            } else if (tipe === "PGK") {
                 const selectedArr = savedAns ? savedAns.split(",") : [];
                 html += `<div class="space-y-2.5 pt-2">`;
                 daftarOpsi.forEach(o => {
                     const checked = selectedArr.includes(o.kode) ? "checked" : "";
+                    const imgHtml = o.img ? buildImageTag(o.img, `Gambar Pilihan ${o.kode}`, "max-h-40") : "";
                     html += `
                         <label class="flex items-start gap-3 p-3.5 rounded-xl border ${checked ? 'border-blue-600 bg-blue-50' : 'border-slate-200 hover:bg-slate-50'} cursor-pointer transition">
                             <input type="checkbox" name="q_${no}" value="${o.kode}" ${checked} onchange="handlePGKChange('${no}')" class="mt-1 accent-blue-700 w-4 h-4">
-                            <span class="text-sm">${o.teks}</span>
+                            <div class="text-sm flex-1">
+                                <div>${o.teks}</div>
+                                ${imgHtml}
+                            </div>
                         </label>`;
                 });
                 html += `</div>`;
-            }
-            // 3. BENAR - SALAH
-            else if (tipe === "BENAR_SALAH") {
+            } else if (tipe === "BENAR_SALAH") {
                 const bsArr = savedAns ? savedAns.split(",") : [];
                 html += `
                     <div class="overflow-x-auto border border-slate-200 rounded-xl mt-2">
@@ -573,9 +743,10 @@
                             <tbody class="divide-y divide-slate-200">`;
                 daftarOpsi.forEach((o, i) => {
                     const val = bsArr[i] || "";
+                    const imgHtml = o.img ? buildImageTag(o.img, `Gambar Pernyataan ${i+1}`, "max-h-32") : "";
                     html += `
                         <tr>
-                            <td class="p-3">${o.teks}</td>
+                            <td class="p-3">${o.teks}${imgHtml}</td>
                             <td class="p-3 text-center">
                                 <input type="radio" name="bs_${no}_${i}" value="BENAR" ${val === "BENAR" ? "checked" : ""} onchange="handleBSChange('${no}', ${daftarOpsi.length})" class="w-4 h-4 accent-blue-700">
                             </td>
@@ -585,24 +756,20 @@
                         </tr>`;
                 });
                 html += `</tbody></table></div>`;
-            }
-            // 4. ISIAN SINGKAT
-            else if (tipe === "ISIAN") {
+            } else if (tipe === "ISIAN") {
                 html += `
                     <div class="pt-2">
                         <input type="text" value="${savedAns}" placeholder="Ketik jawaban singkat Anda di sini..."
                             oninput="saveAnswer('${no}', this.value)"
                             class="w-full md:w-2/3 px-4 py-3 bg-slate-50 border-2 border-blue-200 rounded-xl text-sm font-bold focus:bg-white focus:border-blue-600 outline-none">
                     </div>`;
-            }
-            // 5. ESSAY / URAIAN (DINILAI ADMIN DI SHEET)
-            else if (tipe === "ESSAY") {
+            } else if (tipe === "ESSAY") {
                 html += `
                     <div class="pt-2 space-y-2">
                         <textarea rows="5" placeholder="Tuliskan penjelasan lengkap Anda di sini..."
                             oninput="saveAnswer('${no}', this.value)"
                             class="w-full p-4 bg-slate-50 border-2 border-blue-200 rounded-xl text-sm leading-relaxed focus:bg-white focus:border-blue-600 outline-none">${savedAns}</textarea>
-                        <p class="text-[11px] text-slate-400">*Jawaban uraian ini akan dikirim langsung ke lembar penilaian guru/admin.</p>
+                        <p class="text-[11px] text-slate-400">*Jawaban uraian ini akan diperiksa dan dinilai langsung oleh guru.</p>
                     </div>`;
             }
 
@@ -668,7 +835,7 @@
         }
 
         // =========================================================================
-        // 5. DETEKSI PELANGGARAN REAL-TIME (PINDAH TAB / KELUAR LAYAR)
+        // 5. DETEKSI PELANGGARAN & PENGIRIMAN JAWABAN
         // =========================================================================
         document.addEventListener("visibilitychange", () => {
             if (document.hidden && studentState.isExamActive) {
@@ -693,9 +860,6 @@
             });
         }
 
-        // =========================================================================
-        // 6. SELESAI UJIAN & KIRIM REAL-TIME KE GOOGLE SHEET
-        // =========================================================================
         function confirmFinishExam() {
             if (confirm("Apakah Anda yakin ingin mengakhiri ujian dan mengirim semua jawaban?")) {
                 submitExamNow();
@@ -750,7 +914,7 @@
         }
 
         // =========================================================================
-        // 7. PANEL ADMIN & KEAMANAN PASSWORD (hajra03)
+        // 6. PANEL ADMIN: PENILAIAN ESSAY DI APLIKASI & ANALISIS SOAL PER NOMOR
         // =========================================================================
         function openAdminAuthModal() {
             document.getElementById("input-admin-pass").value = "";
@@ -787,14 +951,24 @@
             switchScreen(studentState.isExamActive ? "screen-exam" : "screen-login");
         }
 
+        function switchAdminTab(tabId) {
+            ["tab-hasil", "tab-analisis", "tab-pengaturan"].forEach(id => {
+                document.getElementById(id).classList.add("hidden");
+                const btn = document.getElementById("btn-" + id);
+                btn.className = "px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition";
+            });
+            document.getElementById(tabId).classList.remove("hidden");
+            document.getElementById("btn-" + tabId).className = "px-4 py-2 rounded-xl text-xs font-bold bg-blue-700 text-white transition";
+        }
+
         function saveAdminSettings() {
-            appConfig.schoolName = document.getElementById("admin-school-name").value.trim() || "SMP NEGERI 1 NUSANTARA";
-            appConfig.examTitle = document.getElementById("admin-exam-title").value.trim() || "Tes Kemampuan Akademik (TKA)";
+            appConfig.schoolName = document.getElementById("admin-school-name").value.trim() || "UPTD SMP NEGERI 13 SINJAI";
+            appConfig.examTitle = document.getElementById("admin-exam-title").value.trim() || "Sumatif Akhir Semester (SAS)";
             appConfig.token = document.getElementById("admin-token").value.trim() || "Matematika9";
             appConfig.duration = Number(document.getElementById("admin-duration").value) || 90;
             appConfig.webhookUrl = document.getElementById("admin-webhook-url").value.trim();
 
-            localStorage.setItem("cbt_tka_config_v3", JSON.stringify(appConfig));
+            localStorage.setItem("cbt_SAS_config_v4", JSON.stringify(appConfig));
             applyConfigToUI();
             alert("Pengaturan berhasil disimpan!");
         }
@@ -811,13 +985,13 @@
                 nama: "Tes Koneksi Admin",
                 kelas: "9.1",
                 token: appConfig.token,
-                skorOtomatis: 100,
-                jawabanEssay: "Tes koneksi berhasil dari perangkat Admin.",
+                skorOtomatis: 70,
+                jawabanEssay: "[No.5] Tes jawaban uraian dari perangkat Admin.",
                 pelanggaran: 0,
                 logPelanggaran: "-"
             });
             if (ok) {
-                alert("Data uji coba terkirim! Tunggu 2 detik lalu klik 'Muat Ulang Data Sheet'.");
+                alert("Data uji coba terkirim! Tunggu 2 detik lalu data akan dimuat otomatis.");
                 setTimeout(fetchLiveResultsFromSheet, 2000);
             }
         }
@@ -825,34 +999,252 @@
         async function fetchLiveResultsFromSheet() {
             const tbody = document.getElementById("admin-live-table");
             if (!appConfig.webhookUrl) {
-                tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-amber-600 font-semibold">URL Web App Google Sheet belum diisi.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-amber-600 font-semibold">URL Web App Google Sheet belum diisi pada tab Pengaturan.</td></tr>`;
                 return;
             }
-            tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-blue-600 font-semibold">Menarik data terbaru dari Google Sheet...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-blue-600 font-semibold">Menarik data terbaru & analisis soal dari Google Sheet...</td></tr>`;
             try {
                 const res = await fetch(appConfig.webhookUrl + "?action=getHasil");
-                const rows = await res.json();
-                if (!Array.isArray(rows) || rows.length <= 1) {
-                    tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400">Belum ada data murid masuk di tab HasilUjian.</td></tr>`;
-                    return;
-                }
-                const dataRows = rows.slice(1).reverse(); // Terbaru di atas
-                tbody.innerHTML = dataRows.map(r => `
-                    <tr class="hover:bg-slate-50">
-                        <td class="p-3 whitespace-nowrap text-slate-500">${r[0] || "-"}</td>
-                        <td class="p-3 font-bold text-slate-800">${r[1] || "-"}</td>
-                        <td class="p-3 font-semibold">${r[2] || "-"}</td>
-                        <td class="p-3 font-bold text-blue-700">${r[4] || "0"}</td>
-                        <td class="p-3 max-w-xs truncate" title="${r[5] || ''}">${r[5] || "-"}</td>
-                        <td class="p-3 font-bold bg-amber-50 text-amber-800 text-center">${r[6] || "-"}</td>
-                        <td class="p-3 font-extrabold text-emerald-700">${r[7] || r[4] || "0"}</td>
-                        <td class="p-3 font-bold ${Number(r[8]) > 0 ? 'text-red-600' : 'text-slate-500'}">${r[8] || "0"}x</td>
-                        <td class="p-3"><span class="px-2 py-1 rounded-md text-[11px] font-bold bg-blue-50 text-blue-800">${r[10] || "-"}</span></td>
-                    </tr>
-                `).join("");
+                const data = await res.json();
+
+                adminHasilData = Array.isArray(data.hasil) ? data.hasil.reverse() : [];
+                adminSoalMeta = Array.isArray(data.soal) && data.soal.length > 0
+                    ? data.soal
+                    : bankSoal.map(s => ({
+                        no: String(s[0]),
+                        tipe: String(s[1]),
+                        pertanyaan: String(s[4]).split("| B:")[0].trim(),
+                        kunci: "-",
+                        bobot: Number(s[10]) || 0
+                    }));
+
+                updateAdminStats();
+                renderAdminHasilTable();
+                renderItemAnalysis();
             } catch (err) {
                 tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-red-600 font-semibold">Gagal memuat data dari Sheet. Pastikan akses Web App diatur ke "Siapa saja (Anyone)".</td></tr>`;
             }
+        }
+
+        function updateAdminStats() {
+            const total = adminHasilData.length;
+            let sumScore = 0;
+            let pendingEssay = 0;
+            let sumViol = 0;
+
+            adminHasilData.forEach(r => {
+                sumScore += Number(r.totalNilai) || 0;
+                sumViol += Number(r.pelanggaran) || 0;
+                if (String(r.status).toLowerCase().includes("menunggu")) pendingEssay++;
+            });
+
+            document.getElementById("stat-total-peserta").textContent = total;
+            document.getElementById("stat-rata-nilai").textContent = total > 0 ? (sumScore / total).toFixed(1) : "0";
+            document.getElementById("stat-pending-essay").textContent = pendingEssay;
+            document.getElementById("stat-total-pelanggaran").textContent = sumViol + "x";
+        }
+
+        function renderAdminHasilTable() {
+            const tbody = document.getElementById("admin-live-table");
+            const filterKelas = document.getElementById("filter-kelas-admin").value;
+
+            const filtered = adminHasilData.map((item, originalIdx) => ({ ...item, originalIdx }))
+                .filter(r => filterKelas === "ALL" || String(r.kelas) === filterKelas);
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400">Belum ada data murid masuk untuk filter ini.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(r => {
+                const isPending = String(r.status).toLowerCase().includes("menunggu");
+                const statusBadge = isPending
+                    ? `<span class="px-2 py-1 rounded-md text-[11px] font-bold bg-amber-100 text-amber-800">${r.status}</span>`
+                    : `<span class="px-2 py-1 rounded-md text-[11px] font-bold bg-emerald-100 text-emerald-800">${r.status}</span>`;
+
+                return `
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 whitespace-nowrap text-slate-500">${r.waktu}</td>
+                        <td class="p-3 font-bold text-slate-800">${r.nama}</td>
+                        <td class="p-3 font-semibold">${r.kelas}</td>
+                        <td class="p-3 font-bold text-blue-700 text-center">${r.skorOtomatis}</td>
+                        <td class="p-3 font-bold bg-amber-50/70 text-amber-900 text-center">${r.nilaiEssay !== "" ? r.nilaiEssay : "-"}</td>
+                        <td class="p-3 font-extrabold text-emerald-700 text-center text-sm">${r.totalNilai}</td>
+                        <td class="p-3 font-bold text-center ${r.pelanggaran > 0 ? 'text-red-600' : 'text-slate-400'}">${r.pelanggaran}x</td>
+                        <td class="p-3">${statusBadge}</td>
+                        <td class="p-3 text-center">
+                            <button onclick="openEssayModal(${r.originalIdx})"
+                                class="px-3 py-1.5 rounded-lg text-[11px] font-bold ${isPending ? 'bg-amber-500 hover:bg-amber-600 text-white shadow-sm' : 'bg-blue-100 hover:bg-blue-200 text-blue-800'} transition">
+                                Periksa & Nilai Essay
+                            </button>
+                        </td>
+                    </tr>`;
+            }).join("");
+        }
+
+        // =========================================================================
+        // 7. MODAL PEMERIKSAAN & PENILAIAN ESSAY OLEH GURU
+        // =========================================================================
+        function openEssayModal(idx) {
+            activeEssayGradeIdx = idx;
+            const r = adminHasilData[idx];
+            if (!r) return;
+
+            document.getElementById("modal-essay-student").textContent = `Peserta: ${r.nama} (Kelas ${r.kelas}) • Waktu: ${r.waktu}`;
+            document.getElementById("modal-essay-answer-box").textContent = r.jawabanEssay || "(Murid tidak mengisi jawaban essay)";
+            document.getElementById("modal-essay-max-hint").textContent = `Skor otomatis (PG/PGK/BS/Isian): ${r.skorOtomatis} poin`;
+            document.getElementById("input-essay-score").value = r.nilaiEssay !== "" ? r.nilaiEssay : "";
+
+            // Tampilkan soal essay & rubrik penilaiannya dari BankSoal
+            const essayQuestions = adminSoalMeta.filter(s => s.tipe === "ESSAY");
+            const rubricBox = document.getElementById("modal-essay-rubric-box");
+            if (essayQuestions.length > 0) {
+                rubricBox.innerHTML = essayQuestions.map(eq => `
+                    <div>
+                        <p class="font-bold text-blue-900">Soal Essay No. ${eq.no} (Bobot Maks: ${eq.bobot} poin):</p>
+                        <p class="text-slate-700 mt-0.5">${eq.pertanyaan}</p>
+                        <p class="text-emerald-800 font-semibold mt-1">Pedoman/Rubrik: ${eq.kunci || "-"}</p>
+                    </div>
+                `).join("<hr class='border-blue-200 my-2'>");
+            } else {
+                rubricBox.innerHTML = `<p class="text-slate-600">Baca jawaban uraian murid di bawah ini dan masukkan skor sesuai rubrik penilaian Anda.</p>`;
+            }
+
+            document.getElementById("modal-grade-essay").classList.remove("hidden");
+        }
+
+        function closeEssayModal() {
+            document.getElementById("modal-grade-essay").classList.add("hidden");
+            activeEssayGradeIdx = -1;
+        }
+
+        async function submitEssayGrade() {
+            if (activeEssayGradeIdx < 0) return;
+            const r = adminHasilData[activeEssayGradeIdx];
+            const valStr = document.getElementById("input-essay-score").value;
+            if (valStr === "" || isNaN(Number(valStr))) {
+                alert("Masukkan angka nilai essay terlebih dahulu!");
+                return;
+            }
+
+            const nilaiEssay = Number(valStr);
+            const btn = document.getElementById("btn-save-essay-grade");
+            btn.disabled = true;
+            btn.textContent = "Menyimpan ke Sheet...";
+
+            await sendPayloadToSheet({
+                action: "GRADE_ESSAY",
+                rowIndex: r.rowIndex,
+                nama: r.nama,
+                nilaiEssay: nilaiEssay
+            });
+
+            // Perbarui langsung tampilan UI Admin secara instan
+            r.nilaiEssay = nilaiEssay;
+            r.totalNilai = (Number(r.skorOtomatis) || 0) + nilaiEssay;
+            r.status = "SELESAI DINILAI";
+
+            btn.disabled = false;
+            btn.textContent = "Simpan Nilai Essay ke Sheet";
+            closeEssayModal();
+            updateAdminStats();
+            renderAdminHasilTable();
+        }
+
+        // =========================================================================
+        // 8. ANALISIS BUTIR SOAL & JAWABAN MURID PER NOMOR
+        // =========================================================================
+        function renderItemAnalysis() {
+            const statsBody = document.getElementById("admin-item-stats-table");
+            const matrixHead = document.getElementById("admin-matrix-head");
+            const matrixBody = document.getElementById("admin-matrix-body");
+
+            // Parse detail JSON setiap murid
+            const parsedStudents = adminHasilData.map(r => {
+                let detail = {};
+                try {
+                    detail = JSON.parse(r.detailJson || "{}");
+                } catch (e) {
+                    detail = {};
+                }
+                return { ...r, detail };
+            });
+
+            const totalPeserta = parsedStudents.length;
+
+            // A. Render Statistik Ketuntasan Per Nomor Soal
+            if (adminSoalMeta.length === 0) {
+                statsBody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400">Data bank soal belum tersedia.</td></tr>`;
+            } else {
+                statsBody.innerHTML = adminSoalMeta.map(s => {
+                    let benarPenuh = 0;
+                    parsedStudents.forEach(st => {
+                        const ansObj = st.detail[s.no];
+                        if (ansObj && ansObj.st === "BENAR") benarPenuh++;
+                    });
+
+                    const persen = totalPeserta > 0 ? Math.round((benarPenuh / totalPeserta) * 100) : 0;
+                    let kategori = `<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-bold">Belum Ada Data</span>`;
+                    if (s.tipe === "ESSAY") {
+                        kategori = `<span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-bold">Uraian (Manual)</span>`;
+                    } else if (totalPeserta > 0) {
+                        if (persen > 70) kategori = `<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">Mudah (${persen}%)</span>`;
+                        else if (persen >= 30) kategori = `<span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold">Sedang (${persen}%)</span>`;
+                        else kategori = `<span class="px-2 py-0.5 rounded-full bg-red-100 text-red-800 font-bold">Sukar (${persen}%)</span>`;
+                    }
+
+                    return `
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 text-center font-extrabold text-blue-900">${s.no}</td>
+                            <td class="p-3 font-bold text-slate-600">${s.tipe}</td>
+                            <td class="p-3 max-w-md truncate" title="${s.pertanyaan}">${s.pertanyaan}</td>
+                            <td class="p-3 font-mono font-bold text-slate-700">${s.tipe === "ESSAY" ? "Rubrik" : s.kunci} (${s.bobot})</td>
+                            <td class="p-3 text-center font-bold">${s.tipe === "ESSAY" ? "-" : `${benarPenuh} / ${totalPeserta}`}</td>
+                            <td class="p-3 text-center font-extrabold text-blue-800">${s.tipe === "ESSAY" ? "-" : `${persen}%`}</td>
+                            <td class="p-3 text-center">${kategori}</td>
+                        </tr>`;
+                }).join("");
+            }
+
+            // B. Render Matriks Jawaban Murid Per Nomor
+            matrixHead.innerHTML = `
+                <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+                    <th class="p-3 font-bold sticky left-0 bg-slate-100 z-10">Nama Murid</th>
+                    <th class="p-3 font-bold">Kelas</th>
+                    ${adminSoalMeta.map(s => `<th class="p-3 font-bold text-center min-w-[75px]">No. ${s.no}<br><span class="text-[10px] font-normal text-slate-500">${s.tipe}</span></th>`).join("")}
+                </tr>`;
+
+            if (parsedStudents.length === 0) {
+                matrixBody.innerHTML = `<tr><td colspan="${adminSoalMeta.length + 2}" class="p-6 text-center text-slate-400">Belum ada jawaban murid untuk dianalisis.</td></tr>`;
+                return;
+            }
+
+            matrixBody.innerHTML = parsedStudents.map(st => {
+                const cells = adminSoalMeta.map(s => {
+                    const d = st.detail[s.no];
+                    if (!d) return `<td class="p-2.5 text-center text-slate-300">-</td>`;
+
+                    let badgeCls = "bg-red-100 text-red-800 border-red-200";
+                    if (d.st === "BENAR") badgeCls = "bg-emerald-100 text-emerald-800 border-emerald-200";
+                    else if (d.st === "SEBAGIAN" || d.st === "ESSAY") badgeCls = "bg-amber-100 text-amber-800 border-amber-200";
+
+                    const shortAns = String(d.j || "-").length > 14 ? String(d.j).substring(0, 14) + "..." : (d.j || "-");
+                    return `
+                        <td class="p-2 text-center">
+                            <span title="Jawaban: ${d.j} | Poin: ${d.p}/${d.m}"
+                                class="inline-block px-2 py-1 rounded-md border text-[11px] font-bold ${badgeCls}">
+                                ${shortAns}
+                            </span>
+                        </td>`;
+                }).join("");
+
+                return `
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 font-bold text-slate-800 sticky left-0 bg-white z-10 whitespace-nowrap">${st.nama}</td>
+                        <td class="p-3 font-semibold text-slate-600">${st.kelas}</td>
+                        ${cells}
+                    </tr>`;
+            }).join("");
         }
 
         function switchScreen(id) {
